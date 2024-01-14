@@ -51,21 +51,9 @@ components:
       value: "/bin/zsh"
     - name: VSCODE_DEFAULT_WORKSPACE
       value: "/projects/home-library/home-library.code-workspace"
-    - name: GOPATH
-      value: /projects/home/go
-    volumeMounts:
-    - name: home
-      path: /projects/home
-    endpoints:
-    - name: kubedock
-      targetPort: 2475
-      exposure: none
 - volume:
     size: 10Gi
   name: projects
-- volume:
-    size: 4Gi
-  name: home
 - name: oc-cli
   container:
     args:
