@@ -51,9 +51,55 @@ components:
       value: "/bin/zsh"
     - name: VSCODE_DEFAULT_WORKSPACE
       value: "/projects/home-library/home-library.code-workspace"
-- volume:
-    size: 10Gi
-  name: projects
+- name: stargate-coordinator
+  container:
+    image: image-registry.openshift-image-registry.svc:5000/dev-tools/stargate-coordinator-4_0:v2
+    sourceMapping: /projects
+    mountSources: true
+    memoryLimit: 3Gi
+    env:
+    - name: JAVA_OPTS
+      value: "-Xmx2G"
+    - name: CLUSTER_NAME
+      value: c4-cluster
+    - name: CLUSTER_VERSION
+      value: "4.0"
+    - name: RACK_NAME
+      value: rack1
+    - name: DATACENTER_NAME
+      value: datacenter1
+    - name: ENABLE_AUTH
+      value: "true"
+    - name: DEVELOPER_MODE
+      value: "true"
+    endpoints:
+    - name: cql
+      targetPort: 9042
+      exposure: internal
+    - name: auth
+      targetPort: 8081
+      exposure: internal
+    - name: health
+      targetPort: 8084
+      exposure: internal
+    - name: grpc
+      targetPort: 8090
+      exposure: internal
+- name: startgate-docsapi
+  container:
+    image: image-registry.openshift-image-registry.svc:5000/dev-tools/stargate-docsapi:v2
+    sourceMapping: /projects
+    mountSources: true
+    memoryLimit: 3Gi
+    env:
+      - name: QUARKUS_GRPC_CLIENTS_BRIDGE_HOST
+        value: localhost
+      - name: QUARKUS_GRPC_CLIENTS_BRIDGE_PORT
+        value: "8091"
+    endpoints:
+      - name: docsapi
+        targetPort: 8180
+        exposure: internal
 - name: oc-cli
   container:
     args:
@@ -66,6 +112,9 @@ components:
     sourceMapping: /projects
     mountSources: true
     memoryLimit: 256M
+- volume:
+    size: 10Gi
+  name: projects
 commands:
 - apply:
     component: oc-cli
