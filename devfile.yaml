@@ -18,21 +18,21 @@ projects:
       revision: main
     remotes:
       origin: https://github.com/cgruver-home-library/catalog.git
-- name: catalog
+- name: bookshelf
   git:
     checkoutFrom:
       remote: origin
       revision: main
     remotes:
       origin: https://github.com/cgruver-home-library/bookshelf.git
-- name: catalog
+- name: librarian
   git:
     checkoutFrom:
       remote: origin
       revision: main
     remotes:
       origin: https://github.com/cgruver-home-library/librarian.git
-- name: catalog
+- name: library
   git:
     checkoutFrom:
       remote: origin
