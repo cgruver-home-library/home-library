@@ -51,56 +51,56 @@ components:
       value: "/bin/zsh"
     - name: VSCODE_DEFAULT_WORKSPACE
       value: "/projects/home-library/home-library.code-workspace"
-- name: stargate-coordinator
-  container:
-    image: image-registry.openshift-image-registry.svc:5000/dev-tools/startgate-coordinator:v2
-    sourceMapping: /projects
-    mountSources: true
-    memoryLimit: 3Gi
-    env:
-    - name: JAVA_OPTS
-      value: "-Xmx2G"
-    - name: CLUSTER_NAME
-      value: c4-cluster
-    - name: CLUSTER_VERSION
-      value: "4.0"
-    - name: RACK_NAME
-      value: rack1
-    - name: DATACENTER_NAME
-      value: datacenter1
-    - name: ENABLE_AUTH
-      value: "true"
-    - name: DEVELOPER_MODE
-      value: "true"
-    endpoints:
-    - name: cql
-      targetPort: 9042
-      exposure: internal
-    - name: auth
-      targetPort: 8081
-      exposure: internal
-    - name: health
-      targetPort: 8084
-      exposure: internal
-    - name: grpc
-      targetPort: 8090
-      exposure: internal
-- name: startgate-docsapi
-  container:
-    image: image-registry.openshift-image-registry.svc:5000/dev-tools/stargate-docsapi:v2
-    sourceMapping: /projects
-    mountSources: true
-    memoryLimit: 3Gi
-    env:
-      - name: QUARKUS_GRPC_CLIENTS_BRIDGE_HOST
-        value: localhost
-      - name: QUARKUS_GRPC_CLIENTS_BRIDGE_PORT
-        value: "8091"
-    endpoints:
-      - name: docsapi
-        targetPort: 8180
-        exposure: public
-        protocol: https
+# - name: stargate-coordinator
+#   container:
+#     image: image-registry.openshift-image-registry.svc:5000/dev-tools/startgate-coordinator:v2
+#     sourceMapping: /projects
+#     mountSources: true
+#     memoryLimit: 3Gi
+#     env:
+#     - name: JAVA_OPTS
+#       value: "-Xmx2G"
+#     - name: CLUSTER_NAME
+#       value: c4-cluster
+#     - name: CLUSTER_VERSION
+#       value: "4.0"
+#     - name: RACK_NAME
+#       value: rack1
+#     - name: DATACENTER_NAME
+#       value: datacenter1
+#     - name: ENABLE_AUTH
+#       value: "true"
+#     - name: DEVELOPER_MODE
+#       value: "true"
+#     endpoints:
+#     - name: cql
+#       targetPort: 9042
+#       exposure: internal
+#     - name: auth
+#       targetPort: 8081
+#       exposure: internal
+#     - name: health
+#       targetPort: 8084
+#       exposure: internal
+#     - name: grpc
+#       targetPort: 8090
+#       exposure: internal
+# - name: startgate-docsapi
+#   container:
+#     image: image-registry.openshift-image-registry.svc:5000/dev-tools/stargate-docsapi:v2
+#     sourceMapping: /projects
+#     mountSources: true
+#     memoryLimit: 3Gi
+#     env:
+#       - name: QUARKUS_GRPC_CLIENTS_BRIDGE_HOST
+#         value: localhost
+#       - name: QUARKUS_GRPC_CLIENTS_BRIDGE_PORT
+#         value: "8091"
+#     endpoints:
+#       - name: docsapi
+#         targetPort: 8180
+#         exposure: public
+#         protocol: https
 - name: oc-cli
   container:
     args:
